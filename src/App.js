@@ -14,7 +14,6 @@ class App extends React.Component {
     this.counterClick = this.counterClick.bind(this);
     this.popItems = this.popItems.bind(this);
     this.addItem = this.addItem.bind(this);
-    this.showItems = this.showItems.bind(this);
   }
 
   counterClick() {
@@ -22,16 +21,6 @@ class App extends React.Component {
       counter: this.state.counter + 1,
     });
     console.log("App state.counter set to: ", this.state.counter + 1);
-  }
-
-  sleep(ms) {
-    return new Promise(function(resolve, reject) {
-      setTimeout(resolve, ms);
-    });
-  }
-
-  showItems() {
-    console.log("items: ", this.state.items);
   }
 
   addItem() {
@@ -63,9 +52,6 @@ class App extends React.Component {
         />
         <button onClick={this.popItems}>
         Submit
-        </button>
-        <button onClick={this.showItems}>
-        Show
         </button>
         <Display
         items={this.state.items}
