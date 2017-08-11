@@ -13,7 +13,6 @@ class App extends React.Component {
     };
     this.counterClick = this.counterClick.bind(this);
     this.popItems = this.popItems.bind(this);
-    this.addItem = this.addItem.bind(this);
   }
 
   counterClick() {
@@ -23,24 +22,30 @@ class App extends React.Component {
     console.log("App state.counter set to: ", this.state.counter + 1);
   }
 
-  addItem() {
-    setTimeout(() => {
-      let items = this.state.items.slice();
-      let n = Math.floor(Math.random() * 100);
-      items.push(n);
-      this.setState({
-        items: items,
-      });
-      console.log("in addItems, items ", this.state.items);
-    },
-    Math.floor(Math.random() * 7000));
-  }
-
   popItems() {
     console.log("popItems depressed. counter = ", this.state.counter);
-    for (let i=0; i<this.state.counter; i++) {
-      this.addItem();
-    }
+
+    let ws = new WebSocket('ws://127.0.0.1:8888/ws');
+    ws.onopen = () => {
+        console.log("ws connection opened");
+        ws.send(
+            JSON.stringify({"count": this.state.counter})
+        );
+    };
+    ws.onmessage = (e) => {
+        console.log("ws received message: ", e.data);
+        let payload = JSON.parse(e.data);
+        console.log("value: ", payload["value"]);
+        let items = this.state.items.slice();
+        items.push(payload["value"]);
+        this.setState({
+            items: items,
+        });
+        console.log("in addItems, items ", this.state.items);
+    };
+    ws.onclose = (e) => {
+        console.log("ws received connection close: ", e.code, e.reason);
+    };
   }
 
   render() {

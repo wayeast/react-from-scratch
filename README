@@ -3,8 +3,18 @@ http://andrewhfarmer.com/build-your-own-starter/#0-intro
 
 Usage
 ---
+
+
+Start websocket server:
+---
+
+```
+python ws_server.py
+```
+
  
 Start the development server with this command:
+---
  
 ```
 npm start
