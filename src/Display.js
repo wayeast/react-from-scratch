@@ -6,6 +6,7 @@ function Display(props) {
   });
   const list = items.map((item, index) =>
       // I'm not supposed to use index as a key, but let it go for now...
+      //  adding a line to test gh
       <li key={index.toString()}>
       Element {index} => {item}
       </li>
